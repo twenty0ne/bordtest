@@ -18,13 +18,18 @@ public:
 private:
 	void		InitChessBoard();
 	bool		IsValidMove(int side, int from_x, int from_y, int to_x, int to_y);
+	bool		IsValidTurn(int side, int target_x, int target_y);
+
+	void		PrintBoard();
+	void		PrintInput();
 
 private:
 	int			m_curSide;
 	Actor*		m_actorWhite;
 	Actor*		m_actorBlack;
 
-	int			m_board[CHESSBOARD_WIDTH][CHESSBOARD_WIDTH];
+	int			m_boardChess[CHESSBOARD_WIDTH][CHESSBOARD_WIDTH];
+	int 		m_boardState[CHESSBOARD_WIDTH][CHESSBOARD_WIDTH];
 };
 
 #endif

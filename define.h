@@ -3,7 +3,9 @@
 
 #define CHESSBOARD_WIDTH		6
 
-#define CHESS_BACK 				-1
+#define CHESS_STATE_BACK 		0
+#define CHESS_STATE_FRONT		1
+
 #define CHESS_NONE				0
 #define CHESS_BLACK_PAWN		1	// 8
 #define CHESS_BLACK_DOOM		2	// 4

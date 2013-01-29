@@ -15,33 +15,21 @@ void GameMain::MoveChess(int side, int from_x, int from_y, int to_x, int to_y)
 	if (!IsValidMove(side, from_x, from_y, to_x, to_y))
 		return;
 
-	chess_id = m_board[from_x][from_y];
-	m_board[to_x][to_y] = chess_id;
-	m_board[from_x][from_y] = CHESS_NONE;
+	chess_id = m_boardChess[from_x][from_y];
+	m_boardChess[to_x][to_y] = chess_id;
+	m_boardChess[from_x][from_y] = CHESS_NONE;
 }
 
 void GameMain::TurnChess(int side, int target_x, int target_y)
 {
-	if ()
+	if (!IsValidTurn(side, target_x, target_y))
+		return;
+
+	m_boardState[target_x][target_y] == CHESS_STATE_FRONT;
 }
 
 void GameMain::InitChessBoard()
 {
-#define CHESS_BLACK_PAWN		1	// 8
-#define CHESS_BLACK_DOOM		2	// 4
-#define CHESS_BLACK_KNIGHT		3	// 2
-#define CHESS_BLACK_BISHOP		4	// 2
-#define CHESS_BLACK_QUEEN		5	// 1
-#define CHESS_BLACK_KING		6	// 1
-#define CHESS_BLACK_BEGIN		CHESS_BLACK_PAWN
-#define CHESS_BLACK_END			CHESS_BLACK_KING
-#define CHESS_WHITE_PAWN		7	// 8
-#define CHESS_WHITE_DOOM		8	// 4
-#define CHESS_WHITE_KNIGHT		9	// 2
-#define CHESS_WHITE_BISHOP		10	// 2
-#define CHESS_WHITE_QUEEN		11	// 1
-#define CHESS_WHITE_KING		12	// 1
-
 	std::vector<int> vec_chess;
 	for (int i = 0; i < 2; ++i)
 	{
@@ -74,11 +62,19 @@ void GameMain::InitChessBoard()
 	// random
 	random_shuffle(vec_chess.begin(), vec_chess.end());
 
-	// input m_board
-	for (int i = 0; i < count; ++i)
+	// input m_boardChess
+	for (int i = 0; i < vec_chess.size(); ++i)
 	{
-		/* code */
+		int bx = i % CHESSBOARD_WIDTH;
+		int by = i / CHESSBOARD_WIDTH;
+		m_boardChess[bx][by] = vec_chess.at(i);
 	}
+
+	// print board
+#if TEST_PRINT_LOG
+	PrintBoard();
+#endif
+
 }
 
 bool GameMain::IsValidMove(int side, int from_x, int from_y, int to_x, int to_y)
@@ -89,12 +85,16 @@ bool GameMain::IsValidMove(int side, int from_x, int from_y, int to_x, int to_y)
 	if (from_x == to_x && from_y == to_y)
 		return false;
 
+	// if state != front, return false
+	if (m_boardState[to_x][to_y] != CHESS_STATE_FRONT)
+		return false;
+
 	// only can move one grid per step
 	if (abs(from_x - to_x) > 1 || abs(from_y - to_y) > 1 || (from_x != to_x && from_y != to_y))
 		return false;
 
-	move_chessid = m_board[from_x][from_y]
-	target_chessid = m_board[to_x][to_y]
+	move_chessid = m_boardChess[from_x][from_y]
+	target_chessid = m_boardChess[to_x][to_y]
 	if (IsSameSide(move_chessid, target_chessid))
 		return false;
 
@@ -115,4 +115,33 @@ bool GameMain::IsValidMove(int side, int from_x, int from_y, int to_x, int to_y)
 		return false;
 
 	return true;
+}
+
+bool GameMain::IsValidTurn(int side, int target_x, int target_y)
+{
+	if (m_boardState[target_x][target_y] == CHESS_STATE_BACK)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+void GameMain::PrintBoard()
+{
+	printf("--------------print board------------")
+	for (int i = 0; i < CHESSBOARD_WIDTH; ++i)
+	{
+		for (int j = 0; j < CHESSBOARD_WIDTH; ++j)
+		{
+			printf("%d ", m_boardChess[i][j]);
+		}
+		printf("\n");
+	}
+}
+
+void GameMain::PrintInput()
+{
+	printf("------------please input you choose-----------")
+	scanf("")
 }
