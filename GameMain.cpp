@@ -26,6 +26,10 @@ void GameMain::TurnChess(int side, int target_x, int target_y)
 		return;
 
 	m_boardState[target_x][target_y] == CHESS_STATE_FRONT;
+
+#if TEST_PRINT_LOG
+	printf("side: %d turn (%d, %d) chess: %d \n", side, target_x, target_y, m_boardChess[target_x][target_y]);
+#endif
 }
 
 void GameMain::InitChessBoard()
@@ -140,8 +144,48 @@ void GameMain::PrintBoard()
 	}
 }
 
-void GameMain::PrintInput()
+void GameMain::HandleInput(int stage)
 {
+	int ix, iy;
 	printf("------------please input you choose-----------")
-	scanf("")
+	scanf("%d, %d", &ix, &iy);
+	// check is it back
+	if (ix < 0 || ix >= CHESSBOARD_WIDTH || iy < 0 || iy >= CHESSBOARD_WIDTH)
+		printf("out of the board\n");
+	if (m_boardState[ix][iy] == CHESS_STATE_BACK)
+	{
+		TurnChess(m_curSide, ix, iy);
+
+		SwapTurn();
+	}
+	else
+	{
+		chess_id = m_boardChess[ix][iy];
+		if (chess_id != CHESS_NONE)
+		{
+			// choose self chess
+			if ((m_curSide == CHESS_SIDE_WHITE && IsWhite(chess_id)) ||
+				(m_curSide == CHESS_SIDE_BLACK && IsBlack(chess_id)))
+			{
+				printf()
+			}
+		}
+	}
+}
+
+void GameMain::SwapTurn()
+{
+	if (m_curSide == CHESS_SIDE_WHITE)
+	{
+		m_curSide = CHESS_SIDE_BLACK;
+	}
+	else if (m_curSide == CHESS_SIDE_BLACK)
+	{
+		m_curSide = CHESS_SIDE_WHITE;
+	}
+
+#if TEST_PRINT_LOG
+	printf("----------swap turn--------------");
+	printf("Now: %d \n", m_curSide);
+#endif
 }

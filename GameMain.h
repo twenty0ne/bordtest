@@ -6,6 +6,10 @@
 // game main logic
 class GameMain
 {
+	enum {
+		
+	}
+
 public:
 	GameMain();
 	~GameMain();
@@ -20,8 +24,10 @@ private:
 	bool		IsValidMove(int side, int from_x, int from_y, int to_x, int to_y);
 	bool		IsValidTurn(int side, int target_x, int target_y);
 
+	void		SwapTurn();
+	void		HandleInput();
+
 	void		PrintBoard();
-	void		PrintInput();
 
 private:
 	int			m_curSide;

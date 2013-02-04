@@ -28,8 +28,8 @@
 #define IsWhite(x) ( x >= CHESS_WHITE_BEGIN && x <= CHESS_WHITE_END )
 #define IsSameSide(x, y) ( (IsBlack(x) && IsBlack(y)) || (IsWhite(x) && IsWhite(y)) ) 
 
-#define CHESSSIDE_WHITE		1
-#define CHESSSIDE_BLACK		2
+#define CHESS_SIDE_WHITE		1
+#define CHESS_SIDE_BLACK		2
 
 int MOVE_DIR[4][2] =
 {
