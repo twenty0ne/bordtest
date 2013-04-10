@@ -3,8 +3,9 @@
 
 #define CHESSBOARD_WIDTH		6
 
-#define CHESS_STATE_BACK 		0
-#define CHESS_STATE_FRONT		1
+#define CHESSBOARD_STATE_NONE		-1
+#define CHESSBOARD_STATE_BACK 		0
+#define CHESSBOARD_STATE_FRONT		1
 
 #define CHESS_NONE				0
 #define CHESS_BLACK_PAWN		1	// 8
@@ -31,17 +32,32 @@
 #define CHESS_SIDE_WHITE		1
 #define CHESS_SIDE_BLACK		2
 
-int MOVE_DIR[4][2] =
+// Actor define
+enum {
+	ACTOR_WHITE = 0,
+	ACTOR_BLACK,
+	ACTOR_COUNT,
+};
+
+// Actor action define
+typedef enum {
+	ACTOR_ACT_NONE = -1,
+	ACTOR_ACT_MOVE,
+	ACTOR_ACT_TURN,
+	ACTOR_ACT_COUNT,
+}ActorAction;
+
+static int MOVE_DIR[4][2] =
 {
 	{0, -1},	// up
 	{0,  1},	// down
 	{-1, 0},	// left
 	{ 1, 0},	// right
-}
+};
 
 typedef struct{
-	byte	x;
-	byte	y;
+	int		x;
+	int		y;
 }ChessPos;
 
 typedef struct{
