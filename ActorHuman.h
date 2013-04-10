@@ -14,8 +14,11 @@ public:
 	/*virtual*/ ActorAction			MakeAction(int fx, int fy, int tx, int ty);
 
 protected:
-	void		MoveChess();
-	void		TurnChess();
+	void							MoveChess();
+	void							TurnChess();
+
+private:
+	void							HandleInput();
 };
 
 #endif

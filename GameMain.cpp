@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <time.h>
 #include "Actor.h"
+#include "ActorHuman.h"
 
 /*static*/GameMain* GameMain::m_pInstance = NULL;
 
@@ -35,6 +36,10 @@ bool GameMain::Init()
 {
 	// init chess board
 	InitChessBoard();
+
+	// init actor
+	m_actor[ACTOR_WHITE] = new ActorHuman;
+	m_actor[ACTOR_BLACK] = new ActorHuman;
 
 #if TEST_PRINT_LOG
 	printf("---cur side: %d \n", m_curSide);
@@ -286,10 +291,14 @@ void GameMain::SwapTurn()
 	if (m_curSide == CHESS_SIDE_WHITE)
 	{
 		m_curSide = CHESS_SIDE_BLACK;
+
+		m_actor[ACTOR_BLACK]->Think(0.0f);
 	}
 	else if (m_curSide == CHESS_SIDE_BLACK)
 	{
 		m_curSide = CHESS_SIDE_WHITE;
+
+		m_actor[ACTOR_WHITE]->Think(0.0f);
 	}
 
 #if TEST_PRINT_LOG
